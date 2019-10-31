@@ -1,68 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## redux理解
 
-In the project directory, you can run:
+1. 中文文档 https://www.redux.org.cn/
 
-### `npm start`
+## Redux是什么
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. redux是一个独立专门用于做状态管理的js库(不是React插件库)
+2. 它可以用在react angular vue等项目中，但基本与rect配合使用
+3. 作用：集中式管理react应用中多个组件共享的状态 对数据进行集中式管理
+4. 状态在哪里 修改状态的行为就在哪里
+5. 状态就不在组件中了 放在redux库里面管理了 redux提供了修改状态的行为
+6. 组件可以读取状态 也可以调用行为去改变状态
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## 初始化状态 
+1. 组件与redux进行交互
+2. store 核心对象
+3. store===>React Component 
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 更新状态 声明式编程
 
-### `npm run build`
+1. actions===>store===>reducers
+2. 分发事件 store.dispatch()
+3. 更新状态 reducers(oldState,actions) =>newState 
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## 在React中状态不能直接更新
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. this.state.xxx=newVal 这样是行不通的
+2. this.setState({}) 必须重新设置新的状态对象
 
-### `npm run eject`
+## store.dispatch
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. store.dispatch(demo) 分发函数名 函数名是函数对象的标识符 通过函数名去找到函数对象 并执行函数体
+2. reducers(oldState,actions) =>newState 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 发布与订阅
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Pubsub.publish('demo',data)   分发函数名
+2. Pubsub.subscribe('demo',(msg,data)=>{}) 找到函数名 并且调用函数体
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 什么情况下需要使用redux
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. 总体原则：能不用就不用，如果不用比较吃力才考虑使用
+2. 某个组件的状态，需要共享
+3. 某个状态需要在任何地方都可以拿到
+4. 一个组件需要改变全局状态
+5. 一个组件需要改变另一个组件的状态
