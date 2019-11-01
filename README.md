@@ -182,16 +182,60 @@
 ## subscribe(listener) 监听在state状态发生改变的时候能够重绘组件
 
 
+## store模块
+
+	import {createStore} from 'redux'
+	
+	// reducers改变状态的模块
+	import {counter} from './reducers'
+	// 创建一个store对象
+	// 内部会第一次调用reducer函数得到初始state状态
+	const store=createStore(counter)
+	export default store
+
 ## reducers模块
 
 1. 包含n个reducer函数的模块
 2. 改变状态
 3. reducer函数接受两个参数(state,action)
 
+	// 包含n个reducer函数的模块
+	
+	import {INCREMENT,DECREMENT} from './action-types'
+	export function  counter(state=0,action) {
+	  
+	   switch(action.type){
+	      case INCREMENT:
+	       return state+action.data
+	      case DECREMENT:
+	        if(state<=0){
+	         return state=0
+	        }
+	       return state-action.data
+	      default:
+	       return state
+	   }
+	
+	
+	  }
+
 ## actions模块
 
 1. 包含所有的action的模块
 
+	// 包含n个action的模块
+	
+	import {INCREMENT,DECREMENT} from './action-types'
+	// 增加的行为
+	export const increment=(number)=>({type:INCREMENT,data:number})
+	// 减少的行为
+	export const decrement=(number)=>({type:DECREMENT,data:number})
+
 ## action-types常量模块
 
 1. // 常量模块
+
+	// 常量模块
+	
+	export const  INCREMENT ='increment'
+	export const  DECREMENT ='decrement'
